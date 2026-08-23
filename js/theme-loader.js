@@ -1,5 +1,5 @@
 /* Theme Embed Script - css.itsash.in
- * Usage: <script src="https://css.itsash.in/js/theme-loader.js?color=#6750A4&heading=Inter&body=Inter&mono=JetBrains+Mono"></script>
+ * Usage: <script src="https://css.itsash.in/js/theme-loader.js?color=#6750A4&heading=Inter"></script>
  * Or:   <script src="https://css.itsash.in/js/theme-loader.js" data-color="#6750A4" data-heading="Inter"></script>
  */
 (function () {
@@ -13,8 +13,6 @@
 
   const COLOR = getParam('color', '#6750A4');
   const HEADING = getParam('heading', 'Inter');
-  const BODY = getParam('body', '');
-  const MONO = getParam('mono', '');
   const MODE = getParam('mode', 'light');
 
   document.documentElement.setAttribute('data-theme', MODE);
@@ -38,8 +36,6 @@
 
   function injectTheme() {
     const fontConfig = { heading: HEADING };
-    if (BODY) fontConfig.body = BODY;
-    if (MONO) fontConfig.mono = MONO;
     const result = window.ThemeEngine.generateTheme(COLOR, fontConfig);
     if (result.error) { console.error('ThemeEngine:', result.error); return; }
 

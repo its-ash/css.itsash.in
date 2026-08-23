@@ -1381,25 +1381,112 @@ function monoStack(name) {
 }
 
 function autoPair(headingFont) {
-  const entry = FONTS.find(f => f.name === headingFont);
-  if (entry) {
-    if (entry.pairWith) return entry.pairWith;
-    if (entry.pairBy) return entry.pairBy;
+  const headingEntries = FONTS.filter(f => f.name === headingFont);
+  if (!headingEntries.length) return 'Inter';
+  const headingTags = new Set(headingEntries.flatMap(e => e.tags));
+  const isSerifHeading = headingTags.has('serif');
+  const isDisplayHeading = headingTags.has('display');
+  const explicitBody = headingEntries.map(e => e.pairBy).find(Boolean);
+  const pairWithNonMono = headingEntries.map(e => e.pairWith).find(p => p && !MONO_FONTS.includes(p));
+
+  const candidates = FONTS.filter(f => {
+    const tags = new Set(f.tags);
+    if (tags.has('mono')) return false;
+    if (isDisplayHeading && tags.has('display')) return false;
+    return true;
+  });
+
+  let best = null;
+  let bestScore = -Infinity;
+
+  for (const c of candidates) {
+    const cTags = new Set(c.tags);
+    let score = 0;
+
+    if (explicitBody && c.name === explicitBody) score += 300;
+    if (pairWithNonMono && c.name === pairWithNonMono) score += 300;
+    if (c.name === headingFont) score += 100;
+    if (cTags.has('body') || cTags.has('readable')) score += 60;
+    if (cTags.has('sans')) score += 25;
+
+    for (const t of headingTags) {
+      if (cTags.has(t) && t !== 'display') score += 15;
+    }
+
+    if (isSerifHeading && cTags.has('sans')) score += 45;
+    if (isDisplayHeading && (cTags.has('body') || cTags.has('readable'))) score += 35;
+    if (headingTags.has('geometric') && cTags.has('geometric')) score += 20;
+    if (headingTags.has('humanist') && cTags.has('humanist')) score += 20;
+    if (headingTags.has('grotesque') && cTags.has('grotesque')) score += 20;
+    if (headingTags.has('rounded') && cTags.has('rounded')) score += 20;
+    if (cTags.has('display')) score -= 80;
+    if (c.name === headingFont && !isDisplayHeading && (cTags.has('body') || cTags.has('readable'))) score += 30;
+
+    if (score > bestScore) {
+      bestScore = score;
+      best = c;
+    }
   }
-  return 'Inter';
+
+  return best?.name || 'Inter';
 }
 
 function autoMono(headingFont, bodyFont) {
+  const MONO_PAIRINGS = {
+    'Geist': 'Geist Mono',
+    'Space Grotesk': 'Space Mono',
+    'IBM Plex Sans': 'IBM Plex Mono',
+    'DM Sans': 'DM Mono',
+    'Spline Sans': 'Spline Sans Mono',
+    'Roboto': 'Roboto Mono',
+    'Roboto Flex': 'Roboto Mono',
+    'Ubuntu': 'Ubuntu Mono',
+    'Source Sans 3': 'Source Code Pro',
+    'Red Hat Text': 'Red Hat Mono',
+    'Red Hat Display': 'Red Hat Mono',
+  };
+
+  for (const f of [headingFont, bodyFont]) {
+    if (MONO_PAIRINGS[f] && MONO_FONTS.includes(MONO_PAIRINGS[f])) return MONO_PAIRINGS[f];
+  }
+
+  const headingEntries = FONTS.filter(e => e.name === headingFont);
+  for (const e of headingEntries) {
+    if (e.pairWith && MONO_FONTS.includes(e.pairWith)) return e.pairWith;
+  }
+
   const tags = new Set([
-    ...(FONTS.find(f => f.name === headingFont)?.tags ?? []),
-    ...(FONTS.find(f => f.name === bodyFont)?.tags ?? []),
+    ...headingEntries.flatMap(e => e.tags),
+    ...(FONTS.filter(f => f.name === bodyFont).flatMap(f => f.tags)),
   ]);
-  if (tags.has('tech') || tags.has('jetbrains')) return 'JetBrains Mono';
-  if (tags.has('ibm')) return 'IBM Plex Mono';
-  if (tags.has('google')) return 'Roboto Mono';
-  if (tags.has('mozilla')) return 'Fira Mono';
-  if (tags.has('space')) return 'Space Mono';
-  return 'JetBrains Mono';
+
+  let best = 'JetBrains Mono';
+  let bestScore = -Infinity;
+
+  for (const monoName of MONO_FONTS) {
+    const monoEntry = FONTS.find(f => f.name === monoName);
+    const monoTags = new Set(monoEntry?.tags ?? []);
+    let score = 0;
+
+    if (tags.has('tech') && monoTags.has('tech')) score += 30;
+    if (tags.has('jetbrains')) score += 50;
+    if (tags.has('ibm') && monoTags.has('ibm')) score += 50;
+    if (tags.has('google') && monoTags.has('google')) score += 25;
+    if (tags.has('mozilla') && monoTags.has('mozilla')) score += 50;
+    if (tags.has('space') && monoTags.has('space')) score += 50;
+    if (tags.has('vercel') && monoTags.has('vercel')) score += 50;
+
+    for (const t of tags) {
+      if (monoTags.has(t)) score += 8;
+    }
+
+    if (score > bestScore) {
+      bestScore = score;
+      best = monoName;
+    }
+  }
+
+  return best;
 }
 
 /* === main.js === */

@@ -1,4 +1,4 @@
-.PHONY: build clean serve deploy push all
+.PHONY: build clean serve deploy push run all
 
 NODE ?= node
 NPM ?= npm
@@ -15,6 +15,11 @@ build:
 serve: build
 	@echo "Starting server at http://localhost:8080"
 	@npx serve . -l 8080
+
+## Start a live-reload dev server
+run: build
+	@echo "Starting dev server at http://localhost:8080"
+	@npx live-server . --port=8080 --no-browser
 
 ## Clean generated files
 clean:
@@ -48,6 +53,7 @@ help:
 	@echo "  make serve   — Build + start local server (port 8080)"
 	@echo "  make push    — Build + commit with Copilot + push"
 	@echo "  make deploy  — Same as push (GH Pages auto-deploys)"
+	@echo "  make run     — Build + start live-reload server (port 8080)"
 	@echo "  make clean   — Remove generated files"
 	@echo "  make help    — Show this help"
 	@echo ""

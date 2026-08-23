@@ -121,21 +121,11 @@ body{font-family:var(--app-sans);background:var(--app-bg);color:var(--app-text);
 
     <div>
       <div class="section-label">Fonts</div>
-      <div class="font-row">
-        <div class="font-field">
-          <label for="heading-font">Headings</label>
-          <select id="heading-font"></select>
-        </div>
-        <div class="font-field">
-          <label for="body-font">Body</label>
-          <select id="body-font"></select>
-        </div>
+      <div class="font-field">
+        <label for="heading-font">Heading Font</label>
+        <select id="heading-font"></select>
       </div>
-      <div class="font-field" style="margin-top:.5rem">
-        <label for="mono-font">Mono</label>
-        <select id="mono-font"></select>
-      </div>
-      <button class="font-auto-btn" id="auto-fonts">⚡ Auto-pair fonts</button>
+      <div id="auto-fonts-info" style="margin-top:.5rem;font-size:.72rem;color:var(--app-text-muted);line-height:1.6"></div>
     </div>
 
     <div>
@@ -222,16 +212,20 @@ function renderPresets() {
 }
 
 function renderFontPickers() {
-  const sansFonts = [...new Set(FONTS.map(f => f.name))];
+  const allFonts = [...new Set(FONTS.map(f => f.name))];
   const headingSel = $('heading-font');
-  const bodySel = $('body-font');
-  const monoSel = $('mono-font');
-  headingSel.innerHTML = sansFonts.map(f => `<option value="${f}">${f}</option>`).join('');
-  bodySel.innerHTML = sansFonts.map(f => `<option value="${f}">${f}</option>`).join('');
-  monoSel.innerHTML = MONO_FONTS.map(f => `<option value="${f}">${f}</option>`).join('');
+  headingSel.innerHTML = allFonts.map(f => `<option value="${f}">${f}</option>`).join('');
   headingSel.value = 'Inter';
-  bodySel.value = 'Plus Jakarta Sans';
-  monoSel.value = 'JetBrains Mono';
+}
+
+function autoFonts() {
+  const heading = $('heading-font').value;
+  const body = autoPair(heading);
+  const mono = autoMono(heading, body);
+  $('auto-fonts-info').innerHTML =
+    `<div style="margin-bottom:.3rem"><span style="color:var(--app-text)">Body:</span> ${body}</div>` +
+    `<div><span style="color:var(--app-text)">Mono:</span> ${mono}</div>`;
+  return { heading, body, mono };
 }
 
 function colorRow(name, hex, oklch) {
@@ -261,11 +255,7 @@ function renderRatios(ratios) {
 
 function run() {
   const input = $('color-input').value.trim();
-  const fontConfig = {
-    heading: $('heading-font').value,
-    body: $('body-font').value,
-    mono: $('mono-font').value,
-  };
+  const fontConfig = autoFonts();
   const result = generateTheme(input, fontConfig);
   if (result.error) {
     $('color-input').classList.add('invalid');
@@ -288,7 +278,7 @@ function run() {
 
   $('css-output').textContent = result.css;
   updateHtmlOutput();
-  const embedUrl = `https://css.itsash.in/js/theme-loader.js?color=${encodeURIComponent($('color-input').value)}&heading=${encodeURIComponent($('heading-font').value)}&body=${encodeURIComponent($('body-font').value)}&mono=${encodeURIComponent($('mono-font').value)}`;
+  const embedUrl = `https://css.itsash.in/js/theme-loader.js?color=${encodeURIComponent($('color-input').value)}&heading=${encodeURIComponent(fontConfig.heading)}`;
   $('header-embed-code').textContent = `<script src="${embedUrl}"><\/script>`;
   setStatus('Theme generated');
 }
@@ -336,15 +326,6 @@ function setupInputs() {
   });
   $('generate').addEventListener('click', run);
   $('heading-font').addEventListener('change', run);
-  $('body-font').addEventListener('change', run);
-  $('mono-font').addEventListener('change', run);
-  $('auto-fonts').addEventListener('click', () => {
-    const heading = $('heading-font').value;
-    $('body-font').value = autoPair(heading);
-    $('mono-font').value = autoMono(heading, $('body-font').value);
-    run();
-    setStatus('Fonts auto-paired');
-  });
   $('copy-embed').addEventListener('click', async () => {
     await navigator.clipboard.writeText($('header-embed-code').textContent);
     setStatus('Embed code copied');
