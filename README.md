@@ -1,10 +1,49 @@
-# Automatic Web Theme Generator
+# css.itsash.in — Automatic Web Theme Generator
 
 Enter **one primary color** and get a complete, production-ready web theme with automatic light/dark variants.
 
-## Run
+**Live: [css.itsash.in](https://css.itsash.in)**
 
-Open `index.html` directly in a browser, or serve locally:
+## Quick Start
+
+### Embed in your site
+
+```html
+<script src="https://css.itsash.in/js/theme-loader.js?color=#6750A4"></script>
+```
+
+With custom fonts:
+
+```html
+<script src="https://css.itsash.in/js/theme-loader.js?color=#0066FF&heading=Space+Grotesk&body=Inter&mono=JetBrains+Mono"></script>
+```
+
+Or use `data-` attributes:
+
+```html
+<script src="https://css.itsash.in/js/theme-loader.js" data-color="#6750A4" data-heading="Inter"></script>
+```
+
+### Parameters
+
+| Param | Default | Description |
+|-------|---------|-------------|
+| `color` | `#6750A4` | Primary color (HEX, RGB, HSL, OKLCH) |
+| `heading` | `Inter` | Heading font (Google Fonts) |
+| `body` | auto-paired | Body font |
+| `mono` | auto-paired | Monospace font |
+| `mode` | `light` | Default theme mode (`light` / `dark`) |
+
+### Build from source
+
+```bash
+make build    # Build bundle → docs/
+make serve    # Build + local server at :8080
+make push     # Build + commit (Copilot message) + push
+make deploy   # Same as push (GH Pages auto-deploys)
+```
+
+### Local dev
 
 ```bash
 npx serve .

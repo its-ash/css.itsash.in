@@ -23,15 +23,16 @@ clean:
 	@rm -f docs/js/theme-engine.js
 	@echo "✓ Cleaned"
 
-## Commit with AI-generated message and push
+## Commit with Copilot-generated message and push
 push: build
-	@echo "Generating commit message..."
+	@echo "Staging changes..."
 	@git add -A
-	@$(eval MSG := $(shell npx @github/copilot-github-cli@latest commit --message 2>/dev/null || echo "update theme engine"))
-	@git commit -m "$(MSG)" 2>/dev/null || true
+	@echo "Generating commit message with Copilot..."
+	@$(eval MSG := $(shell gh copilot suggest -t commit 2>/dev/null | head -5 | tail -1 || echo "update theme engine"))
+	@git commit -m "$(MSG)" 2>/dev/null || git commit -m "update theme engine" 2>/dev/null || true
 	@echo "Pushing to $(REMOTE)/$(BRANCH)..."
 	@git push $(REMOTE) $(BRANCH)
-	@echo "✓ Pushed"
+	@echo "✓ Pushed → GitHub Pages will auto-deploy"
 
 ## Deploy to GitHub Pages (just push, GH Actions handles the rest)
 deploy: push

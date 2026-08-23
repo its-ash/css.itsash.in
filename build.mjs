@@ -13,45 +13,47 @@ function readSrc(rel) {
 }
 
 function stripImports(src) {
+  return src.replace(/^import\s+.*$/gm, '');
+}
+
+function stripExport(src) {
   return src
-    .replace(/^import\s+.*$/gm, '')
-    .replace(/^export\s+/gm, '');
+    .replace(/^export\s+(const|let|var|function|class)\s+/gm, '$1 ')
+    .replace(/^export\s*\{[^}]*\};?\s*$/gm, '');
 }
 
-function wrapExport(src, varName) {
-  const stripped = stripImports(src);
-  return `const ${varName} = (() => {\n${stripped}\n})();\n`;
-}
+const colorSrc = stripExport(stripImports(readSrc('engine/color.js')));
+const paletteSrc = stripExport(stripImports(readSrc('engine/palette.js')));
+const themeSrc = stripExport(stripImports(readSrc('engine/theme.js')));
+const componentsSrc = stripExport(stripImports(readSrc('engine/components.js')));
+const fontsSrc = stripExport(stripImports(readSrc('engine/fonts.js')));
+const mainSrc = stripExport(stripImports(readSrc('main.js')));
 
-const colorSrc = readSrc('engine/color.js');
-const paletteSrc = readSrc('engine/palette.js');
-const themeSrc = readSrc('engine/theme.js');
-const componentsSrc = readSrc('engine/components.js');
-const fontsSrc = readSrc('engine/fonts.js');
-const mainSrc = readSrc('main.js');
+const bundle = `/* Theme Engine Bundle — css.itsash.in */
+/* Auto-generated. Do not edit directly. */
+(function (global) {
+"use strict";
 
-// Bundle: strip imports/exports, concat in dependency order
-const bundle = `/* Theme Engine - Auto-generated bundle */
-/* color.js */
-${stripImports(colorSrc)}
+/* === color.js === */
+${colorSrc}
 
-/* palette.js */
-${stripImports(paletteSrc)}
+/* === palette.js === */
+${paletteSrc}
 
-/* theme.js */
-${stripImports(themeSrc)}
+/* === theme.js === */
+${themeSrc}
 
-/* components.js */
-const COMPONENTS = ${JSON.stringify(stripImports(componentsSrc).replace(/^const COMPONENTS = /, '').replace(/;$/, ''))};
+/* === components.js === */
+${componentsSrc}
 
-/* fonts.js */
-${stripImports(fontsSrc)}
+/* === fonts.js === */
+${fontsSrc}
 
-/* main */
-${stripImports(mainSrc)}
+/* === main.js === */
+${mainSrc}
 
-/* Export */
-window.ThemeEngine = { generateTheme, autoPair, autoMono, fontCssUrl };
+global.ThemeEngine = { generateTheme, autoPair, autoMono, fontCssUrl, FONTS, MONO_FONTS };
+})(typeof window !== 'undefined' ? window : this);
 `;
 
 const outDir = join(__dirname, 'docs', 'js');
