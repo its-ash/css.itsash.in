@@ -1,5 +1,7 @@
 import { oklchStr, contrastRatio } from './color.js';
 import { generateCore, generateThemes } from './palette.js';
+import { generateCoreForStyle } from './style-engine.js';
+import { validateAndFix, auditContrast } from './contrast-engine.js';
 import { fontStack, monoStack, autoPair, autoMono } from './fonts.js';
 
 const DEFAULT_HEADING = 'Inter';
@@ -132,9 +134,14 @@ function tokenize(theme) {
   return m;
 }
 
-export function buildTheme(primaryInput, fontConfig = {}) {
-  const core = generateCore(primaryInput);
-  const { light, dark } = generateThemes(core);
+export function buildTheme(primaryInput, fontConfig = {}, styleId = 'default') {
+  const core = styleId && styleId !== 'default'
+    ? generateCoreForStyle(primaryInput, styleId)
+    : generateCore(primaryInput);
+  let { light, dark } = generateThemes(core);
+  const validation = validateAndFix(light, dark);
+  light = validation.light;
+  dark = validation.dark;
   const lightTokens = tokenize(light);
   const darkTokens = tokenize(dark);
   const headingFont = fontConfig.heading || DEFAULT_HEADING;
@@ -146,6 +153,9 @@ export function buildTheme(primaryInput, fontConfig = {}) {
     light: { tokens: lightTokens, theme: light },
     dark: { tokens: darkTokens, theme: dark },
     ratios: checkContrast(light, dark),
+    audit: validation.audit,
+    totalFixes: validation.totalFixes,
+    allPass: validation.allPass,
   };
 }
 

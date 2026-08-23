@@ -27,6 +27,10 @@ const paletteSrc = stripExport(stripImports(readSrc('engine/palette.js')));
 const themeSrc = stripExport(stripImports(readSrc('engine/theme.js')));
 const componentsSrc = stripExport(stripImports(readSrc('engine/components.js')));
 const fontsSrc = stripExport(stripImports(readSrc('engine/fonts.js')));
+const stylesSrc = stripExport(stripImports(readSrc('engine/styles.js')));
+const styleEngineSrc = stripExport(stripImports(readSrc('engine/style-engine.js')));
+const contrastEngineSrc = stripExport(stripImports(readSrc('engine/contrast-engine.js')));
+const visibilityEngineSrc = stripExport(stripImports(readSrc('engine/visibility-engine.js')));
 const mainSrc = stripExport(stripImports(readSrc('main.js')));
 
 const bundle = `/* Theme Engine Bundle — css.itsash.in */
@@ -49,10 +53,22 @@ ${componentsSrc}
 /* === fonts.js === */
 ${fontsSrc}
 
+/* === styles.js === */
+${stylesSrc}
+
+/* === style-engine.js === */
+${styleEngineSrc}
+
+/* === contrast-engine.js === */
+${contrastEngineSrc}
+
+/* === visibility-engine.js === */
+${visibilityEngineSrc}
+
 /* === main.js === */
 ${mainSrc}
 
-global.ThemeEngine = { generateTheme, autoPair, autoMono, fontCssUrl, FONTS, MONO_FONTS };
+global.ThemeEngine = { generateTheme, autoPair, autoMono, autoPairForStyle, autoMonoForStyle, generateCoreForStyle, fontCssUrl, FONTS, MONO_FONTS, STYLE_IDS, STYLE_LABELS, runVisibilityAudit, startVisibilityWatch };
 })(typeof window !== 'undefined' ? window : this);
 `;
 

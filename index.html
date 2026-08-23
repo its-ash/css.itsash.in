@@ -3,10 +3,36 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Automatic Web Theme Generator</title>
+<title>Theme Engine — Automatic Web Theme Generator from One Color</title>
+<meta name="description" content="Generate a complete, production-ready web design system from a single color. WCAG-validated light/dark themes, 50+ components, auto font pairing, and copy-paste CSS — free and open source.">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0b0d12">
+<link rel="canonical" href="https://css.itsash.in/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23818cf8'/%3E%3Cstop offset='1' stop-color='%23a78bfa'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='8' fill='%230b0d12'/%3E%3Ccircle cx='16' cy='16' r='9' fill='url(%23g)'/%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Theme Engine">
+<meta property="og:title" content="Theme Engine — Automatic Web Theme Generator">
+<meta property="og:description" content="One primary color in, a full light/dark web design system out. WCAG-validated contrast, auto font pairing, 50+ components.">
+<meta property="og:url" content="https://css.itsash.in/">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Theme Engine — Automatic Web Theme Generator">
+<meta name="twitter:description" content="One primary color in, a full light/dark web design system out. WCAG-validated contrast, auto font pairing, 50+ components.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"Theme Engine","url":"https://css.itsash.in/","description":"Generate a complete, production-ready web design system from a single color. WCAG-validated light/dark themes, 50+ components, auto font pairing.","applicationCategory":"DesignApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5XZLKL5SG7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-5XZLKL5SG7');
+</script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -21,16 +47,30 @@
   --app-shadow:0 4px 24px rgba(0,0,0,.3);
   --app-transition:.2s cubic-bezier(.4,0,.2,1);
 }
+html,body{height:100%}
 html{font-size:14px}
-body{font-family:var(--app-sans);background:var(--app-bg);color:var(--app-text);min-height:100vh;line-height:1.6;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
-.app-header{display:flex;align-items:center;justify-content:space-between;padding:.85rem 1.5rem;background:var(--app-surface);border-bottom:1px solid var(--app-border);position:sticky;top:0;z-index:50;backdrop-filter:saturate(1.4)}
-.app-title{display:flex;align-items:center;gap:.65rem;font-size:1.05rem;font-weight:700;letter-spacing:-.01em}
-.app-title-dot{width:10px;height:10px;border-radius:50%;background:var(--app-primary);box-shadow:0 0 12px var(--app-primary)}
-.app-layout{display:grid;grid-template-columns:360px 1fr;gap:0;height:calc(100vh - 51px)}
+body{font-family:var(--app-sans);background:var(--app-bg);color:var(--app-text);line-height:1.6;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;display:flex;flex-direction:column;overflow:hidden;-webkit-tap-highlight-color:transparent}
+:focus-visible{outline:2px solid var(--app-primary);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+.app-header{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;padding:.85rem 1.5rem;background:color-mix(in srgb,var(--app-surface) 92%,transparent);border-bottom:1px solid var(--app-border);position:sticky;top:0;z-index:50;backdrop-filter:saturate(1.4) blur(10px)}
+.brand{display:flex;align-items:center;gap:.7rem;min-width:0}
+.brand-mark{width:1.9rem;height:1.9rem;border-radius:8px;flex-shrink:0;background:linear-gradient(135deg,var(--app-primary),#a78bfa);box-shadow:0 0 16px rgba(129,140,248,.45)}
+.brand-text{min-width:0}
+.brand h1{font-size:1.05rem;font-weight:700;letter-spacing:-.01em;line-height:1.2}
+.brand-tagline{font-size:.72rem;color:var(--app-text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.header-actions{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}
+.embed-chip{display:flex;align-items:center;gap:.5rem;background:var(--app-surface-2);border:1px solid var(--app-border);border-radius:var(--app-radius);padding:.3rem .4rem .3rem .7rem}
+.embed-chip-label{font-size:.65rem;font-weight:600;color:var(--app-text-subtle);text-transform:uppercase;letter-spacing:.06em;flex-shrink:0}
+.embed-chip code{font-family:var(--app-mono);font-size:.75rem;color:var(--app-text);max-width:34vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.embed-chip .app-btn{background:var(--app-surface-3);padding:.35rem .7rem;font-size:.72rem;flex:0 0 auto}
+.embed-chip .app-btn:hover{background:var(--app-primary-soft)}
+.header-link{font-size:.78rem;color:var(--app-text-muted);text-decoration:none;white-space:nowrap;transition:color var(--app-transition)}
+.header-link:hover{color:var(--app-primary)}
+.app-layout{flex:1 1 auto;min-height:0;display:grid;grid-template-columns:360px 1fr;gap:0}
 .app-sidebar{background:var(--app-surface);border-right:1px solid var(--app-border);padding:1.25rem;overflow-y:auto;display:flex;flex-direction:column;gap:1.1rem}
 .app-sidebar::-webkit-scrollbar{width:6px}
 .app-sidebar::-webkit-scrollbar-thumb{background:var(--app-border);border-radius:3px}
-.app-main{overflow:hidden;display:flex;flex-direction:column}
+.app-main{overflow:hidden;display:flex;flex-direction:column;min-height:0}
 .field{display:flex;flex-direction:column;gap:.4rem}
 .field label{font-size:.68rem;font-weight:600;color:var(--app-text-muted);text-transform:uppercase;letter-spacing:.06em}
 .field input,.field textarea,.field select{width:100%;padding:.55rem .7rem;background:var(--app-surface-2);border:1px solid var(--app-border);border-radius:var(--app-radius);color:var(--app-text);font-family:var(--app-mono);font-size:.82rem;transition:border-color var(--app-transition),box-shadow var(--app-transition);appearance:none}
@@ -90,21 +130,38 @@ body{font-family:var(--app-sans);background:var(--app-bg);color:var(--app-text);
 .app-status{position:fixed;bottom:1rem;left:1rem;padding:.5rem .9rem;background:var(--app-surface-3);border:1px solid var(--app-border);border-radius:var(--app-radius-sm);font-size:.75rem;color:var(--app-text-muted);font-family:var(--app-mono);box-shadow:var(--app-shadow);transition:opacity .3s ease}
 .divider{height:1px;background:var(--app-border);margin:.2rem 0}
 @media(max-width:840px){
-  .app-layout{grid-template-columns:1fr;height:auto}
+  body{overflow:auto}
+  .app-layout{grid-template-columns:1fr}
   .app-sidebar{border-right:none;border-bottom:1px solid var(--app-border)}
   .preview-frame{min-height:400px}
+  .brand-tagline{display:none}
+  .embed-chip code{max-width:44vw}
 }
 </style>
 </head>
 <body>
-<div class="app-header">
-  <div class="app-title"> <code id="header-embed-code" style="font-family:var(--app-mono);font-size:.78rem;font-weight:700;color:var(--app-text);background:var(--app-surface-2);border:1px solid var(--app-border);border-radius:var(--app-radius);padding:.35rem .7rem">&lt;script src="https://css.itsash.in/js/theme-loader.js?color=#6750A4&heading=Inter"&gt;&lt;/script&gt;</code> <button class="app-btn" id="copy-embed" style="padding:.3rem .6rem;font-size:.72rem;flex:0 0 auto">Copy</button></div>
-  <div class="app-btn-row">
-    <button class="app-btn" id="copy-css">Copy CSS</button>
-    <button class="app-btn" id="copy-html">Copy HTML</button>
-    <button class="app-btn" id="download">Download</button>
+<header class="app-header">
+  <div class="brand">
+    <span class="brand-mark" aria-hidden="true"></span>
+    <div class="brand-text">
+      <h1>Theme Engine</h1>
+      <p class="brand-tagline">One color in, a full light/dark design system out</p>
+    </div>
   </div>
-</div>
+  <div class="header-actions">
+    <a class="header-link" href="https://itsash.github.io" target="_blank" rel="noopener noreferrer">itsash.github.io</a>
+    <div class="embed-chip">
+      <span class="embed-chip-label">Embed</span>
+      <code id="header-embed-code">&lt;script src="https://css.itsash.in/js/theme-loader.js?color=#6750A4&amp;heading=Inter"&gt;&lt;/script&gt;</code>
+      <button class="app-btn" id="copy-embed">Copy</button>
+    </div>
+    <div class="app-btn-row">
+      <button class="app-btn" id="copy-css">Copy CSS</button>
+      <button class="app-btn" id="copy-html">Copy HTML</button>
+      <button class="app-btn app-btn-primary" id="download">Download</button>
+    </div>
+  </div>
+</header>
 
 <div class="app-layout">
   <aside class="app-sidebar">
@@ -126,6 +183,11 @@ body{font-family:var(--app-sans);background:var(--app-bg);color:var(--app-text);
         <select id="heading-font"></select>
       </div>
       <div id="auto-fonts-info" style="margin-top:.5rem;font-size:.72rem;color:var(--app-text-muted);line-height:1.6"></div>
+    </div>
+
+    <div class="font-field">
+      <label for="style-select">Design Style</label>
+      <select id="style-select"></select>
     </div>
 
     <div>
@@ -173,10 +235,31 @@ body{font-family:var(--app-sans);background:var(--app-bg);color:var(--app-text);
 
 <script src="./js/theme-engine.js"></script>
 <script>
-const { generateTheme, FONTS, MONO_FONTS, autoPair, autoMono } = window.ThemeEngine;
+const { generateTheme, FONTS, MONO_FONTS, autoPair, autoMono, autoPairForStyle, autoMonoForStyle, STYLE_IDS, STYLE_LABELS } = window.ThemeEngine;
 
 const $ = (id) => document.getElementById(id);
-const PRESETS = ['#6750A4','#0066FF','#009E73','#D55E00','#CC79A7','#0072B2','#E69F00','#56B4E9','#7449F5','#E63946','#2A9D8F','#F4A261','#264653','#9B5DE5','#00BBF9','#F15BB5'];
+const STYLE_PRESETS = {
+  'default': ['#6750A4','#0066FF','#009E73','#D55E00','#CC79A7','#0072B2','#E69F00','#56B4E9','#7449F5','#E63946','#2A9D8F','#F4A261','#264653','#9B5DE5','#00BBF9','#F15BB5'],
+  'flat': ['#0066FF','#009E73','#D55E00','#CC79A7','#0072B2','#E69F00','#56B4E9','#6750A4','#F4A261','#2A9D8F','#264653','#E63946','#7449F5','#9B5DE5','#00BBF9','#F15BB5'],
+  'material': ['#6750A4','#0066FF','#009E73','#D55E00','#0072B2','#E69F00','#56B4E9','#F4A261','#2A9D8F','#264653','#E63946','#CC79A7','#7449F5','#9B5DE5','#00BBF9','#F15BB5'],
+  'neumorphism': ['#A8B5C7','#B0C4DE','#C4B8D4','#A5D6A7','#FFCC80','#90CAF9','#CE93D8','#FFAB91','#80DEEA','#AED581','#F48FB1','#81D4FA','#FFD54F','#BCAAA4','#90A4AE','#B39DDB'],
+  'glassmorphism': ['#818CF8','#A78BFA','#06B6D4','#34D399','#FBBF24','#F472B6','#60A5FA','#22D3EE','#F59E0B','#EC4899','#10B981','#6366F1','#8B5CF6','#14B8A6','#0EA5E9','#D946EF'],
+  'brutalism': ['#FF0000','#0000FF','#00FF00','#FFCC00','#FF00FF','#FF6600','#00CCFF','#000000','#FF3366','#33FF00','#0066FF','#CC00FF','#FF9900','#00FF99','#9900FF','#FF0099'],
+  'maximalism': ['#FF006E','#FB5607','#FFBE0B','#8338EC','#3A86FF','#06FFA5','#FF4081','#7B2FF7','#F72585','#4361EE','#7209B7','#F9C74F','#F3722C','#90BE6D','#43AA8B','#577590'],
+  'skeuomorphism': ['#5C6BC0','#66BB6A','#FFA726','#42A5F5','#AB47BC','#26A69A','#FFCA28','#EF5350','#78909C','#8D6E63','#9CCC65','#5DD9C3','#E8A0BF','#B39DDB','#7E57C2','#26C6DA'],
+  'skeuominimalism': ['#6750A4','#0066FF','#009E73','#D55E00','#0072B2','#E69F00','#56B4E9','#F4A261','#2A9D8F','#264653','#E63946','#7449F5','#9B5DE5','#00BBF9','#F15BB5','#CC79A7'],
+  'dark-highcontrast': ['#FFFF00','#00FF00','#00FFFF','#FF00FF','#FF0000','#0000FF','#FF8800','#88FF00','#00FF88','#8800FF','#FF0088','#0088FF','#FFFFFF','#88FF88','#FF8888','#8888FF'],
+  'retro-8bit': ['#E63946','#06D6A0','#118AB2','#FFD166','#073B4C','#EF476F','#26547C','#FFC857','#9B5DE5','#00BBF9','#F15BB5','#FEE440','#00F5D4','#F15BB5','#9B5DE5','#00BBF9'],
+  'cyberpunk': ['#FF006E','#00F5FF','#FF00FF','#00FF00','#FFD700','#0080FF','#FF1493','#00FFFF','#39FF14','#FF6EC7','#BF00FF','#00FF7F','#FF00AA','#0088FF','#FF4500','#7B00FF'],
+  'claymorphism': ['#FF6B9D','#C44569','#F8A5C2','#FD79A8','#FDA7DF','#786FA6','#5793D1','#A3C4F3','#7FD8BE','#B8E0D2','#D6EADF','#E4F1D6','#F4F9E6','#FF9A8B','#FFB7B2','#FFDAC1'],
+  'bauhaus': ['#E63946','#FFD700','#1D3557','#2A9D8F','#E76F51','#264653','#F4A261','#E9C46A','#FF006E','#0066FF','#009E73','#FF6600','#000000','#FFCC00','#00CCFF','#FF3366'],
+  'organic': ['#7FB069','#A5C9A3','#C9DBA5','#E8DAB2','#D4956B','#B5835D','#9C7C5D','#7A9E7E','#5B8C5A','#4A7C59','#3D5A40','#2D5043','#83A598','#A5B59F','#C5D9C0','#E0E8D5'],
+  'typographic': ['#1A1A1A','#2C2C2C','#444444','#666666','#8B0000','#003366','#1B4332','#4A0E4E','#800020','#0B3954','#6B2D5C','#1A5E3F','#3E1F47','#0D1B2A','#1B263C','#2B2D42'],
+  'minimalism-mono': ['#1A1A1A','#2C2C2C','#444444','#666666','#888888','#AAAAAA','#CCCCCC','#EEEEEE','#5C5C5C','#3D3D3D','#707070','#505050','#606060','#909090','#B0B0B0','#D0D0D0'],
+  'papercut': ['#E07A5F','#3D405B','#81B29A','#F2CC8F','#F4F1DE','#264653','#2A9D8F','#E9C46A','#F4A261','#E76F51','#B5838D','#6D6875','#A4243B','#D8973C','#264E36','#5B2A86'],
+  'skeuomorphism-classic': ['#5C6BC0','#66BB6A','#FFA726','#42A5F5','#AB47BC','#26A69A','#FFCA28','#EF5350','#78909C','#8D6E63','#9CCC65','#5DD9C3','#E8A0BF','#B39DDB','#7E57C2','#26C6DA'],
+};
+let PRESETS = STYLE_PRESETS['default'];
 
 let currentTheme = null;
 let previewReady = false;
@@ -198,6 +281,8 @@ function setStatus(msg, ms = 2000) {
 
 function renderPresets() {
   const grid = $('presets');
+  const styleId = $('style-select').value || 'default';
+  PRESETS = STYLE_PRESETS[styleId] || STYLE_PRESETS['default'];
   grid.innerHTML = PRESETS.map(c => `<div class="preset" data-color="${c}" style="background:${c}" title="${c}"></div>`).join('');
   grid.querySelectorAll('.preset').forEach(el => {
     el.addEventListener('click', () => {
@@ -216,12 +301,16 @@ function renderFontPickers() {
   const headingSel = $('heading-font');
   headingSel.innerHTML = allFonts.map(f => `<option value="${f}">${f}</option>`).join('');
   headingSel.value = 'Inter';
+  const styleSel = $('style-select');
+  styleSel.innerHTML = STYLE_IDS.map(id => `<option value="${id}">${STYLE_LABELS[id]}</option>`).join('');
+  styleSel.value = 'default';
 }
 
 function autoFonts() {
   const heading = $('heading-font').value;
-  const body = autoPair(heading);
-  const mono = autoMono(heading, body);
+  const styleId = $('style-select').value || 'default';
+  const body = autoPairForStyle(heading, styleId);
+  const mono = autoMonoForStyle(heading, body, styleId);
   $('auto-fonts-info').innerHTML =
     `<div style="margin-bottom:.3rem"><span style="color:var(--app-text)">Body:</span> ${body}</div>` +
     `<div><span style="color:var(--app-text)">Mono:</span> ${mono}</div>`;
@@ -256,7 +345,8 @@ function renderRatios(ratios) {
 function run() {
   const input = $('color-input').value.trim();
   const fontConfig = autoFonts();
-  const result = generateTheme(input, fontConfig);
+  const styleId = $('style-select').value || 'default';
+  const result = generateTheme(input, fontConfig, styleId);
   if (result.error) {
     $('color-input').classList.add('invalid');
     setStatus('Error: ' + result.error);
@@ -278,8 +368,14 @@ function run() {
 
   $('css-output').textContent = result.css;
   updateHtmlOutput();
-  const embedUrl = `https://css.itsash.in/js/theme-loader.js?color=${encodeURIComponent($('color-input').value)}&heading=${encodeURIComponent(fontConfig.heading)}`;
+  const embedUrl = `https://css.itsash.in/js/theme-loader.js?color=${encodeURIComponent($('color-input').value)}&heading=${encodeURIComponent(fontConfig.heading)}&style=${encodeURIComponent(styleId)}`;
   $('header-embed-code').textContent = `<script src="${embedUrl}"><\/script>`;
+  const params = new URLSearchParams();
+  params.set('color', $('color-input').value);
+  params.set('heading', fontConfig.heading);
+  params.set('style', styleId);
+  const newUrl = `${location.pathname}?${params.toString()}`;
+  history.replaceState(null, '', newUrl);
   setStatus('Theme generated');
 }
 
@@ -326,6 +422,7 @@ function setupInputs() {
   });
   $('generate').addEventListener('click', run);
   $('heading-font').addEventListener('change', run);
+  $('style-select').addEventListener('change', () => { renderPresets(); run(); });
   $('copy-embed').addEventListener('click', async () => {
     await navigator.clipboard.writeText($('header-embed-code').textContent);
     setStatus('Embed code copied');
@@ -359,10 +456,22 @@ function setupInputs() {
   });
 }
 
+function syncFromUrl() {
+  const params = new URLSearchParams(location.search);
+  const color = params.get('color');
+  const heading = params.get('heading');
+  const style = params.get('style');
+  if (color) { $('color-input').value = color; $('color-picker').value = color.toLowerCase(); }
+  if (heading && FONTS.find(f => f.name === heading)) $('heading-font').value = heading;
+  if (style && STYLE_IDS.includes(style)) $('style-select').value = style;
+}
+
 renderPresets();
 renderFontPickers();
 setupTabs();
 setupInputs();
+syncFromUrl();
+renderPresets();
 run();
 </script>
 </body>

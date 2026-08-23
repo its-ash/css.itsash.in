@@ -13,6 +13,7 @@
 
   const COLOR = getParam('color', '#6750A4');
   const HEADING = getParam('heading', 'Inter');
+  const STYLE = getParam('style', 'default');
   const MODE = getParam('mode', 'light');
 
   document.documentElement.setAttribute('data-theme', MODE);
@@ -36,7 +37,7 @@
 
   function injectTheme() {
     const fontConfig = { heading: HEADING };
-    const result = window.ThemeEngine.generateTheme(COLOR, fontConfig);
+    const result = window.ThemeEngine.generateTheme(COLOR, fontConfig, STYLE);
     if (result.error) { console.error('ThemeEngine:', result.error); return; }
 
     // Inject font link
