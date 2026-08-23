@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Automatic Web Theme Generator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --app-bg:#0b0d12;--app-surface:#131620;--app-surface-2:#1a1e2a;--app-surface-3:#222636;
+  --app-text:#e8eaf0;--app-text-muted:#8b90a0;--app-text-subtle:#5d6373;
+  --app-border:#262b3c;--app-border-light:#1e2230;
+  --app-primary:#818cf8;--app-primary-soft:rgba(129,140,248,.10);--app-primary-hover:#a5b4fc;
+  --app-success:#34d399;--app-error:#f87171;
+  --app-radius-sm:6px;--app-radius:10px;--app-radius-lg:14px;
+  --app-mono:'SF Mono',Menlo,Monaco,Consolas,monospace;
+  --app-sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  --app-shadow:0 4px 24px rgba(0,0,0,.3);
+  --app-transition:.2s cubic-bezier(.4,0,.2,1);
+}
+html{font-size:14px}
+body{font-family:var(--app-sans);background:var(--app-bg);color:var(--app-text);min-height:100vh;line-height:1.6;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+.app-header{display:flex;align-items:center;justify-content:space-between;padding:.85rem 1.5rem;background:var(--app-surface);border-bottom:1px solid var(--app-border);position:sticky;top:0;z-index:50;backdrop-filter:saturate(1.4)}
+.app-title{display:flex;align-items:center;gap:.65rem;font-size:1.05rem;font-weight:700;letter-spacing:-.01em}
+.app-title-dot{width:10px;height:10px;border-radius:50%;background:var(--app-primary);box-shadow:0 0 12px var(--app-primary)}
+.app-layout{display:grid;grid-template-columns:360px 1fr;gap:0;height:calc(100vh - 51px)}
+.app-sidebar{background:var(--app-surface);border-right:1px solid var(--app-border);padding:1.25rem;overflow-y:auto;display:flex;flex-direction:column;gap:1.1rem}
+.app-sidebar::-webkit-scrollbar{width:6px}
+.app-sidebar::-webkit-scrollbar-thumb{background:var(--app-border);border-radius:3px}
+.app-main{overflow:hidden;display:flex;flex-direction:column}
+.field{display:flex;flex-direction:column;gap:.4rem}
+.field label{font-size:.68rem;font-weight:600;color:var(--app-text-muted);text-transform:uppercase;letter-spacing:.06em}
+.field input,.field textarea,.field select{width:100%;padding:.55rem .7rem;background:var(--app-surface-2);border:1px solid var(--app-border);border-radius:var(--app-radius);color:var(--app-text);font-family:var(--app-mono);font-size:.82rem;transition:border-color var(--app-transition),box-shadow var(--app-transition);appearance:none}
+.field input:focus,.field textarea:focus,.field select:focus{outline:none;border-color:var(--app-primary);box-shadow:0 0 0 3px var(--app-primary-soft)}
+.field input.invalid{border-color:var(--app-error)}
+.field select{cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath fill='%238b90a0' d='M2 3.5L5 6.5L8 3.5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .7rem center;padding-right:1.8rem}
+.field select option{background:var(--app-surface-2);color:var(--app-text)}
+.input-row{display:flex;gap:.4rem}
+.input-row input{flex:1}
+.color-pick-btn{display:flex;align-items:center;gap:.3rem;padding:.55rem .65rem;background:var(--app-surface-2);border:1px solid var(--app-border);border-radius:var(--app-radius);color:var(--app-text-muted);cursor:pointer;font-size:.82rem;transition:border-color var(--app-transition),color var(--app-transition)}
+.color-pick-btn:hover{border-color:var(--app-primary);color:var(--app-text)}
+.color-pick-btn input[type="color"]{width:0;height:0;opacity:0;position:absolute}
+.font-row{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+.font-field{display:flex;flex-direction:column;gap:.35rem}
+.font-field label{font-size:.68rem;font-weight:600;color:var(--app-text-muted);text-transform:uppercase;letter-spacing:.06em}
+.font-field select{width:100%;padding:.45rem .6rem;background:var(--app-surface-2);border:1px solid var(--app-border);border-radius:var(--app-radius);color:var(--app-text);font-size:.78rem;cursor:pointer;transition:border-color var(--app-transition);appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath fill='%238b90a0' d='M2 3.5L5 6.5L8 3.5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .55rem center;padding-right:1.5rem}
+.font-field select:focus{outline:none;border-color:var(--app-primary)}
+.font-field select option{background:var(--app-surface-2);color:var(--app-text)}
+.font-auto-btn{display:inline-flex;align-items:center;gap:.25rem;padding:.25rem .5rem;background:transparent;border:1px solid var(--app-border);border-radius:var(--app-radius-sm);color:var(--app-text-muted);font-size:.68rem;font-weight:500;cursor:pointer;transition:all var(--app-transition);margin-top:.25rem}
+.font-auto-btn:hover{border-color:var(--app-primary);color:var(--app-primary)}
+.app-btn{padding:.55rem 1rem;border:1px solid var(--app-border);border-radius:var(--app-radius);background:var(--app-surface-2);color:var(--app-text);font-family:var(--app-sans);font-size:.82rem;font-weight:500;cursor:pointer;transition:all var(--app-transition);white-space:nowrap}
+.app-btn:hover{border-color:var(--app-primary);background:var(--app-surface-3)}
+.app-btn-primary{background:var(--app-primary);border-color:var(--app-primary);color:#0b0d12;font-weight:600}
+.app-btn-primary:hover{background:var(--app-primary-hover);border-color:var(--app-primary-hover);filter:brightness(1.05)}
+.app-btn-row{display:flex;gap:.5rem;flex-wrap:wrap}
+.app-btn-row .app-btn{flex:1;text-align:center}
+.section-label{font-size:.68rem;font-weight:600;color:var(--app-text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.5rem}
+.preset-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:.4rem}
+.preset{aspect-ratio:1;border-radius:var(--app-radius-sm);cursor:pointer;border:2px solid transparent;transition:transform .12s ease,border-color .15s ease}
+.preset:hover{transform:scale(1.12)}
+.preset.active{border-color:var(--app-text);box-shadow:0 0 0 2px var(--app-bg),0 0 0 4px var(--app-primary)}
+.info-block{background:var(--app-surface-2);border:1px solid var(--app-border);border-radius:var(--app-radius-lg);padding:1rem}
+.info-block h3{font-size:.68rem;font-weight:600;color:var(--app-text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.75rem;display:flex;align-items:center;justify-content:space-between}
+.color-row{display:flex;align-items:center;gap:.6rem;margin-bottom:.55rem}
+.color-row:last-child{margin-bottom:0}
+.swatch{width:1.75rem;height:1.75rem;border-radius:var(--app-radius-sm);border:1px solid var(--app-border);flex-shrink:0;transition:transform .15s ease}
+.color-row:hover .swatch{transform:scale(1.08)}
+.color-info{display:flex;flex-direction:column;min-width:0;flex:1}
+.color-info-name{font-size:.76rem;font-weight:600}
+.color-info-value{font-size:.7rem;color:var(--app-text-muted);font-family:var(--app-mono);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ratio-list{display:flex;flex-direction:column;gap:.3rem}
+.ratio-item{display:flex;align-items:center;justify-content:space-between;font-size:.75rem;font-family:var(--app-mono)}
+.ratio-item .pass{color:var(--app-success);font-weight:600}
+.ratio-item .fail{color:var(--app-error);font-weight:600}
+.preview-frame{flex:1;border:none;background:#fff;width:100%;height:100%;min-height:600px}
+.app-tabs{display:flex;gap:.2rem;padding:.5rem 1.5rem;background:var(--app-surface);border-bottom:1px solid var(--app-border)}
+.app-tab{padding:.35rem .85rem;border:none;background:transparent;color:var(--app-text-muted);font-size:.8rem;font-weight:500;cursor:pointer;border-radius:var(--app-radius-sm);transition:background var(--app-transition),color var(--app-transition)}
+.app-tab:hover{color:var(--app-text);background:var(--app-surface-2)}
+.app-tab.active{background:var(--app-primary-soft);color:var(--app-primary)}
+.tab-content{flex:1;overflow:hidden;display:flex;flex-direction:column}
+.tab-panel{display:none;flex:1;overflow:auto}
+.tab-panel.active{display:flex}
+.code-view{flex:1;overflow:auto;padding:1.5rem}
+.code-view pre{font-family:var(--app-mono);font-size:.78rem;line-height:1.65;color:var(--app-text);white-space:pre-wrap;word-break:break-word}
+.css-out{flex:1;overflow:auto;padding:1.5rem}
+.css-out pre{font-family:var(--app-mono);font-size:.76rem;line-height:1.65;color:var(--app-text);white-space:pre-wrap}
+.app-status{position:fixed;bottom:1rem;left:1rem;padding:.5rem .9rem;background:var(--app-surface-3);border:1px solid var(--app-border);border-radius:var(--app-radius-sm);font-size:.75rem;color:var(--app-text-muted);font-family:var(--app-mono);box-shadow:var(--app-shadow);transition:opacity .3s ease}
+.divider{height:1px;background:var(--app-border);margin:.2rem 0}
+@media(max-width:840px){
+  .app-layout{grid-template-columns:1fr;height:auto}
+  .app-sidebar{border-right:none;border-bottom:1px solid var(--app-border)}
+  .preview-frame{min-height:400px}
+}
+</style>
+</head>
+<body>
+<div class="app-header">
+  <div class="app-title"><span class="app-title-dot"></span> Automatic Web Theme Generator</div>
+  <div class="app-btn-row">
+    <button class="app-btn" id="copy-css">Copy CSS</button>
+    <button class="app-btn" id="copy-html">Copy HTML</button>
+    <button class="app-btn" id="download">Download</button>
+  </div>
+</div>
+
+<div class="app-layout">
+  <aside class="app-sidebar">
+    <div class="field">
+      <label for="color-input">Primary Color</label>
+      <div class="input-row">
+        <input type="text" id="color-input" value="#6750A4" placeholder="HEX, RGB, HSL, OKLCH" spellcheck="false">
+        <label class="color-pick-btn">Pick<input type="color" id="color-picker" value="#6750a4"></label>
+      </div>
+    </div>
+    <div class="app-btn-row">
+      <button class="app-btn app-btn-primary" id="generate" style="flex:2">Generate Theme</button>
+    </div>
+
+    <div>
+      <div class="section-label">Fonts</div>
+      <div class="font-row">
+        <div class="font-field">
+          <label for="heading-font">Headings</label>
+          <select id="heading-font"></select>
+        </div>
+        <div class="font-field">
+          <label for="body-font">Body</label>
+          <select id="body-font"></select>
+        </div>
+      </div>
+      <div class="font-field" style="margin-top:.5rem">
+        <label for="mono-font">Mono</label>
+        <select id="mono-font"></select>
+      </div>
+      <button class="font-auto-btn" id="auto-fonts">⚡ Auto-pair fonts</button>
+    </div>
+
+    <div>
+      <div class="section-label">Color Presets</div>
+      <div class="preset-grid" id="presets"></div>
+    </div>
+
+    <div class="info-block">
+      <h3>Core Colors</h3>
+      <div id="core-colors"></div>
+    </div>
+
+    <div class="info-block">
+      <h3>Typography</h3>
+      <div id="font-info" style="font-size:.76rem;color:var(--app-text-muted);line-height:1.7"></div>
+    </div>
+
+    <div class="info-block">
+      <h3>Contrast Ratios</h3>
+      <div class="ratio-list" id="ratios"></div>
+    </div>
+  </aside>
+
+  <main class="app-main">
+    <div class="app-tabs">
+      <button class="app-tab active" data-tab="preview">Preview</button>
+      <button class="app-tab" data-tab="css">CSS Output</button>
+      <button class="app-tab" data-tab="html">HTML Output</button>
+    </div>
+    <div class="tab-content">
+      <div class="tab-panel active" data-panel="preview">
+        <iframe class="preview-frame" id="preview" title="Theme preview" src="preview.html"></iframe>
+      </div>
+      <div class="tab-panel" data-panel="css">
+        <div class="css-out"><pre id="css-output"></pre></div>
+      </div>
+      <div class="tab-panel" data-panel="html">
+        <div class="css-out"><pre id="html-output"></pre></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="app-status" id="status">Ready</div>
+
+<script type="module">
+import { generateTheme } from './src/main.js';
+import { FONTS, MONO_FONTS, autoPair, autoMono } from './src/engine/fonts.js';
+
+const $ = (id) => document.getElementById(id);
+const PRESETS = ['#6750A4','#0066FF','#009E73','#D55E00','#CC79A7','#0072B2','#E69F00','#56B4E9','#7449F5','#E63946','#2A9D8F','#F4A261','#264653','#9B5DE5','#00BBF9','#F15BB5'];
+
+let currentTheme = null;
+let previewReady = false;
+let pendingTheme = null;
+const previewFrame = $('preview');
+
+window.addEventListener('message', (e) => {
+  if (e.data && e.data.type === 'preview-ready') {
+    previewReady = true;
+    if (pendingTheme) sendToPreview(pendingTheme);
+  }
+});
+
+function setStatus(msg, ms = 2000) {
+  $('status').textContent = msg;
+  clearTimeout(setStatus._t);
+  setStatus._t = setTimeout(() => $('status').textContent = 'Ready', ms);
+}
+
+function renderPresets() {
+  const grid = $('presets');
+  grid.innerHTML = PRESETS.map(c => `<div class="preset" data-color="${c}" style="background:${c}" title="${c}"></div>`).join('');
+  grid.querySelectorAll('.preset').forEach(el => {
+    el.addEventListener('click', () => {
+      const c = el.dataset.color;
+      $('color-input').value = c;
+      $('color-picker').value = c.toLowerCase();
+      grid.querySelectorAll('.preset').forEach(p => p.classList.remove('active'));
+      el.classList.add('active');
+      run();
+    });
+  });
+}
+
+function renderFontPickers() {
+  const sansFonts = [...new Set(FONTS.map(f => f.name))];
+  const headingSel = $('heading-font');
+  const bodySel = $('body-font');
+  const monoSel = $('mono-font');
+  headingSel.innerHTML = sansFonts.map(f => `<option value="${f}">${f}</option>`).join('');
+  bodySel.innerHTML = sansFonts.map(f => `<option value="${f}">${f}</option>`).join('');
+  monoSel.innerHTML = MONO_FONTS.map(f => `<option value="${f}">${f}</option>`).join('');
+  headingSel.value = 'Inter';
+  bodySel.value = 'Plus Jakarta Sans';
+  monoSel.value = 'JetBrains Mono';
+}
+
+function colorRow(name, hex, oklch) {
+  return `<div class="color-row">
+    <div class="swatch" style="background:${hex}"></div>
+    <div class="color-info">
+      <span class="color-info-name">${name}</span>
+      <span class="color-info-value">${hex} · ${oklch}</span>
+    </div>
+  </div>`;
+}
+
+function renderCore(core) {
+  $('core-colors').innerHTML =
+    colorRow('Primary', core.primary, core.primaryOklch) +
+    colorRow('Accent', core.accent, core.accentOklch) +
+    colorRow('Neutral', core.neutral, core.neutralOklch) +
+    colorRow('Contrast', core.contrast, core.contrastOklch);
+}
+
+function renderRatios(ratios) {
+  $('ratios').innerHTML = ratios.map(r => {
+    const cls = r.ratio >= 4.5 ? 'pass' : (r.ratio >= 3 ? 'pass' : 'fail');
+    return `<div class="ratio-item"><span>${r.name}</span><span class="${cls}">${r.ratio}:1</span></div>`;
+  }).join('');
+}
+
+function run() {
+  const input = $('color-input').value.trim();
+  const fontConfig = {
+    heading: $('heading-font').value,
+    body: $('body-font').value,
+    mono: $('mono-font').value,
+  };
+  const result = generateTheme(input, fontConfig);
+  if (result.error) {
+    $('color-input').classList.add('invalid');
+    setStatus('Error: ' + result.error);
+    return;
+  }
+  $('color-input').classList.remove('invalid');
+  currentTheme = result;
+  renderCore(result.core);
+  renderRatios(result.ratios);
+  $('font-info').innerHTML =
+    `<div style="margin-bottom:.4rem"><span style="color:var(--app-text)">Headings:</span> ${result.fonts.heading}</div>` +
+    `<div style="margin-bottom:.4rem"><span style="color:var(--app-text)">Body:</span> ${result.fonts.body}</div>` +
+    `<div><span style="color:var(--app-text)">Mono:</span> ${result.fonts.mono}</div>`;
+
+  const payload = { css: result.css, url: result.fontUrl, core: result.core };
+  pendingTheme = payload;
+  sendToPreview(payload);
+  if (!previewReady) setTimeout(() => sendToPreview(payload), 600);
+
+  $('css-output').textContent = result.css;
+  updateHtmlOutput();
+  setStatus('Theme generated');
+}
+
+function sendToPreview(payload) {
+  const w = previewFrame.contentWindow;
+  if (!w) return;
+  w.postMessage({ type: 'theme-css', css: payload.css }, '*');
+  w.postMessage({ type: 'theme-fonts', url: payload.url }, '*');
+  w.postMessage({ type: 'theme-core', core: payload.core }, '*');
+}
+
+async function updateHtmlOutput() {
+  if (!currentTheme) return;
+  const resp = await fetch('preview.html');
+  const html = await resp.text();
+  const fontUrl = currentTheme.fontUrl;
+  const fontLink = fontUrl
+    ? `<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="${fontUrl}" rel="stylesheet">`
+    : '';
+  const full = html.replace('<style id="theme-css"></style>', `${fontLink}<style id="theme-css">${currentTheme.css}</style>`);
+  $('html-output').textContent = full;
+}
+
+previewFrame.addEventListener('load', () => {
+  previewReady = true;
+  if (pendingTheme) sendToPreview(pendingTheme);
+});
+
+function setupTabs() {
+  document.querySelectorAll('.app-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const target = tab.dataset.tab;
+      document.querySelectorAll('.app-tab').forEach(t => t.classList.toggle('active', t === tab));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.dataset.panel === target));
+    });
+  });
+}
+
+function setupInputs() {
+  $('color-input').addEventListener('keydown', e => { if (e.key === 'Enter') run() });
+  $('color-picker').addEventListener('input', e => {
+    $('color-input').value = e.target.value.toUpperCase();
+    run();
+  });
+  $('generate').addEventListener('click', run);
+  $('heading-font').addEventListener('change', run);
+  $('body-font').addEventListener('change', run);
+  $('mono-font').addEventListener('change', run);
+  $('auto-fonts').addEventListener('click', () => {
+    const heading = $('heading-font').value;
+    $('body-font').value = autoPair(heading);
+    $('mono-font').value = autoMono(heading, $('body-font').value);
+    run();
+    setStatus('Fonts auto-paired');
+  });
+  $('copy-css').addEventListener('click', async () => {
+    if (!currentTheme) return;
+    await navigator.clipboard.writeText(currentTheme.css);
+    setStatus('CSS copied');
+  });
+  $('copy-html').addEventListener('click', async () => {
+    if (!currentTheme) return;
+    const resp = await fetch('preview.html');
+    const html = await resp.text();
+    const css = currentTheme.css;
+    const fontUrl = currentTheme.fontUrl;
+    const fontLink = fontUrl
+      ? `<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="${fontUrl}" rel="stylesheet">`
+      : '';
+    const full = html.replace('<style id="theme-css"></style>', `${fontLink}<style id="theme-css">${css}</style>`);
+    await navigator.clipboard.writeText(full);
+    setStatus('HTML copied');
+  });
+  $('download').addEventListener('click', () => {
+    if (!currentTheme) return;
+    const css = new Blob([currentTheme.css], { type: 'text/css' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(css);
+    a.download = 'theme.css';
+    a.click();
+    setStatus('Downloaded');
+  });
+}
+
+renderPresets();
+renderFontPickers();
+setupTabs();
+setupInputs();
+run();
+</script>
+</body>
+</html>
