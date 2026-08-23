@@ -23,13 +23,11 @@ jobs:
         with:
           node-version: 20
       - name: Build theme engine
-        run: |
-          node build.mjs
-          cp preview.html docs/preview.html
+        run: node build.mjs
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: docs/
+          path: .
 
   deploy:
     needs: build

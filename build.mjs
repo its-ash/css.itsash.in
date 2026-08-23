@@ -56,10 +56,10 @@ global.ThemeEngine = { generateTheme, autoPair, autoMono, fontCssUrl, FONTS, MON
 })(typeof window !== 'undefined' ? window : this);
 `;
 
-const outDir = join(__dirname, 'docs', 'js');
+const outDir = join(__dirname, 'js');
 mkdirSync(outDir, { recursive: true });
 
 const outFile = join(outDir, 'theme-engine.js');
 writeFileSync(outFile, bundle.trim() + '\n');
 
-console.log('✓ Built docs/js/theme-engine.js');
+console.log('✓ Built js/theme-engine.js');

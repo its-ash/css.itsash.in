@@ -181,9 +181,9 @@ body{font-family:var(--app-sans);background:var(--app-bg);color:var(--app-text);
 
 <div class="app-status" id="status">Ready</div>
 
-<script type="module">
-import { generateTheme } from './src/main.js';
-import { FONTS, MONO_FONTS, autoPair, autoMono } from './src/engine/fonts.js';
+<script src="./js/theme-engine.js"></script>
+<script>
+const { generateTheme, FONTS, MONO_FONTS, autoPair, autoMono } = window.ThemeEngine;
 
 const $ = (id) => document.getElementById(id);
 const PRESETS = ['#6750A4','#0066FF','#009E73','#D55E00','#CC79A7','#0072B2','#E69F00','#56B4E9','#7449F5','#E63946','#2A9D8F','#F4A261','#264653','#9B5DE5','#00BBF9','#F15BB5'];

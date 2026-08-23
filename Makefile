@@ -5,22 +5,20 @@ NPM ?= npm
 REMOTE ?= origin
 BRANCH ?= main
 
-## Build the standalone bundle + copy assets to docs/
+## Build the standalone bundle
 build:
 	@echo "Building theme engine bundle..."
 	@$(NODE) build.mjs
-	@echo "Copying preview.html to docs/..."
-	@cp preview.html docs/preview.html
-	@echo "✓ Build complete → docs/"
+	@echo "✓ Build complete → js/theme-engine.js"
 
 ## Start a local dev server
 serve: build
 	@echo "Starting server at http://localhost:8080"
-	@npx serve docs/ -l 8080
+	@npx serve . -l 8080
 
 ## Clean generated files
 clean:
-	@rm -f docs/js/theme-engine.js
+	@rm -f js/theme-engine.js
 	@echo "✓ Cleaned"
 
 ## Commit with Copilot-generated message and push
