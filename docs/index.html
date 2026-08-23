@@ -114,9 +114,9 @@ footer a:hover{text-decoration:underline}
 
 <div class="toast" id="t"></div>
 
-<script type="module">
-import { generateTheme } from './js/theme-engine.js';
-import { FONTS, MONO_FONTS, autoPair, autoMono } from './js/theme-engine.js';
+<script src="./js/theme-engine.js"></script>
+<script>
+const { generateTheme, FONTS, MONO_FONTS, autoPair, autoMono } = window.ThemeEngine;
 
 const $ = id => document.getElementById(id);
 let current = null;
