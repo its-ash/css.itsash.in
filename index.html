@@ -98,7 +98,7 @@ body{font-family:var(--app-sans);background:var(--app-bg);color:var(--app-text);
 </head>
 <body>
 <div class="app-header">
-  <div class="app-title"><span class="app-title-dot"></span> Automatic Web Theme Generator</div>
+  <div class="app-title"> <code id="header-embed-code" style="font-family:var(--app-mono);font-size:.78rem;font-weight:700;color:var(--app-text);background:var(--app-surface-2);border:1px solid var(--app-border);border-radius:var(--app-radius);padding:.35rem .7rem">&lt;script src="https://css.itsash.in/js/theme-loader.js?color=#6750A4&heading=Inter"&gt;&lt;/script&gt;</code> <button class="app-btn" id="copy-embed" style="padding:.3rem .6rem;font-size:.72rem;flex:0 0 auto">Copy</button></div>
   <div class="app-btn-row">
     <button class="app-btn" id="copy-css">Copy CSS</button>
     <button class="app-btn" id="copy-html">Copy HTML</button>
@@ -288,6 +288,8 @@ function run() {
 
   $('css-output').textContent = result.css;
   updateHtmlOutput();
+  const embedUrl = `https://css.itsash.in/js/theme-loader.js?color=${encodeURIComponent($('color-input').value)}&heading=${encodeURIComponent($('heading-font').value)}&body=${encodeURIComponent($('body-font').value)}&mono=${encodeURIComponent($('mono-font').value)}`;
+  $('header-embed-code').textContent = `<script src="${embedUrl}"><\/script>`;
   setStatus('Theme generated');
 }
 
@@ -342,6 +344,10 @@ function setupInputs() {
     $('mono-font').value = autoMono(heading, $('body-font').value);
     run();
     setStatus('Fonts auto-paired');
+  });
+  $('copy-embed').addEventListener('click', async () => {
+    await navigator.clipboard.writeText($('header-embed-code').textContent);
+    setStatus('Embed code copied');
   });
   $('copy-css').addEventListener('click', async () => {
     if (!currentTheme) return;
