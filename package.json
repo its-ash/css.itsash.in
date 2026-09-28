@@ -1,0 +1,15 @@
+{
+  "name": "scss-bootstrap-theme-engine",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "node build-static.js",
+    "dev": "python3 -m http.server 8791"
+  },
+  "devDependencies": {
+    "sass": "^1.103.1"
+  },
+  "dependencies": {
+    "bulma": "^1.0.4"
+  }
+}

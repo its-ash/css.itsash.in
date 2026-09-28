@@ -1,0 +1,99 @@
+.button.is-primary { background-color: var(--bulma-primary) !important; border-color: var(--bulma-primary) !important; color: white !important; }
+.button.is-link { background-color: var(--bulma-link) !important; border-color: var(--bulma-link) !important; color: white !important; }
+.button.is-outlined.is-primary { border-color: var(--bulma-primary) !important; color: var(--bulma-primary) !important; }
+.button.is-outlined.is-link { border-color: var(--bulma-link) !important; color: var(--bulma-link) !important; }
+
+body { background: var(--bulma-body-background-color); }
+h1, h2, h3, h4, h5, h6 { font-weight: 700; text-shadow: 0 1px 0 rgba(255, 255, 255, .5); }
+
+a { color: var(--bulma-primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.button {
+  background: linear-gradient(to bottom, rgba(255, 255, 255, .3), rgba(0, 0, 0, .1));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .4), 0 2px 3px rgba(0, 0, 0, .3) !important;
+}
+.button:hover { filter: brightness(1.08); }
+.button:active { box-shadow: inset 0 2px 4px rgba(0, 0, 0, .4) !important; transform: translateY(1px); }
+.button[disabled] { filter: grayscale(.3); opacity: .6; }
+.button.is-outlined.is-primary, .button.is-outlined.is-link { background: none; }
+
+.input, .textarea, .select select {
+  background: linear-gradient(to bottom, rgba(0, 0, 0, .04), rgba(0, 0, 0, 0));
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, .25) !important;
+}
+.input:focus, .textarea:focus, .select select:focus {
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, .3), 0 0 0 .2rem rgba(var(--bulma-primary-rgb), .25) !important;
+}
+.checkbox input, .radio input, input[type=range] { accent-color: var(--bulma-primary); }
+input[type=range]::-webkit-slider-thumb {
+  background: linear-gradient(to bottom, #fff, #ccc);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .4);
+}
+input[type=range]::-moz-range-thumb {
+  background: linear-gradient(to bottom, #fff, #ccc);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .4);
+}
+
+.card {
+  background: linear-gradient(to bottom, rgba(255, 255, 255, .06), rgba(0, 0, 0, .03));
+}
+.card-header {
+  background: linear-gradient(to bottom, rgba(255, 255, 255, .15), rgba(0, 0, 0, .05));
+  border-bottom: 1px solid rgba(0, 0, 0, .15);
+  font-weight: 700;
+}
+
+.notification { box-shadow: inset 0 1px 0 rgba(255, 255, 255, .3), 0 2px 4px rgba(0, 0, 0, .15); }
+.tag { box-shadow: inset 0 1px 0 rgba(255, 255, 255, .3); }
+
+.table thead th { background: linear-gradient(to bottom, rgba(0, 0, 0, .08), rgba(0, 0, 0, .02)); font-weight: 700; }
+.table.is-striped tbody tr:nth-child(even) { background-color: rgba(0, 0, 0, .03); }
+
+.navbar {
+  background: linear-gradient(to bottom, rgba(255, 255, 255, .12), rgba(0, 0, 0, .04)) !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .25);
+}
+.navbar-item.navbar-brand, .navbar-brand .navbar-item { font-weight: 700; text-shadow: 0 1px 0 rgba(255, 255, 255, .4); }
+
+.panel-block { background: linear-gradient(to bottom, rgba(255, 255, 255, .05), rgba(0, 0, 0, .02)); }
+
+.breadcrumb {
+  background: linear-gradient(to bottom, rgba(255, 255, 255, .15), rgba(0, 0, 0, .05));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .3), 0 1px 2px rgba(0, 0, 0, .15);
+  border-radius: .5rem;
+  padding: .5rem 1rem;
+}
+.breadcrumb li + li::before { color: rgba(0, 0, 0, .4); text-shadow: 0 1px 0 rgba(255, 255, 255, .4); }
+.breadcrumb li.is-active a { font-weight: 700; text-shadow: 0 1px 0 rgba(255, 255, 255, .5); }
+
+.pagination-link, .pagination-previous, .pagination-next {
+  background: linear-gradient(to bottom, rgba(255, 255, 255, .3), rgba(0, 0, 0, .1)) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .4), 0 2px 3px rgba(0, 0, 0, .3) !important;
+  font-weight: 600;
+}
+.pagination-link:hover { filter: brightness(1.08); }
+.pagination-link.is-current {
+  background: linear-gradient(to bottom, color-mix(in srgb, var(--bulma-primary) 82%, white), var(--bulma-primary)) !important;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, .3) !important;
+}
+.pagination-link[disabled] { filter: grayscale(.3); opacity: .6; }
+
+blockquote {
+  background: linear-gradient(to bottom, rgba(0, 0, 0, .03), rgba(0, 0, 0, 0));
+  border-left: 4px solid var(--bulma-primary);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, .15);
+  padding: 1rem;
+}
+
+[data-theme="dark"] {
+  .button { background: linear-gradient(to bottom, rgba(255, 255, 255, .12), rgba(0, 0, 0, .3)); }
+  .input, .textarea, .select select { background: linear-gradient(to bottom, rgba(0, 0, 0, .3), rgba(0, 0, 0, .1)); }
+  .card { background: linear-gradient(to bottom, rgba(255, 255, 255, .04), rgba(0, 0, 0, .15)); }
+  .card-header { background: linear-gradient(to bottom, rgba(255, 255, 255, .06), rgba(0, 0, 0, .15)); border-bottom-color: rgba(255, 255, 255, .1); }
+  .table.is-striped tbody tr:nth-child(even) { background-color: rgba(255, 255, 255, .04); }
+  .navbar { background: linear-gradient(to bottom, rgba(255, 255, 255, .05), rgba(0, 0, 0, .2)) !important; }
+  .panel-block { background: linear-gradient(to bottom, rgba(255, 255, 255, .03), rgba(0, 0, 0, .1)); }
+  .breadcrumb { background: linear-gradient(to bottom, rgba(255, 255, 255, .06), rgba(0, 0, 0, .15)); }
+  .pagination-link, .pagination-previous, .pagination-next { background: linear-gradient(to bottom, rgba(255, 255, 255, .12), rgba(0, 0, 0, .3)) !important; }
+}

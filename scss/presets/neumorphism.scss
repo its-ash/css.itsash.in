@@ -1,0 +1,113 @@
+//! bulma-config: {"$radius": "1rem", "$radius-large": "1.25rem", "$duration": "240ms", "$speed": "160ms", "$easing": "ease-out"}
+
+body { background: var(--bulma-body-background-color); }
+h1, h2, h3, h4, h5, h6 { font-weight: 700; }
+
+a { color: var(--bulma-primary); text-decoration: none; }
+a:hover { opacity: .8; }
+
+.card, .button, .input, .textarea, .select select {
+  border: none !important;
+  box-shadow: 8px 8px 16px rgba(163, 177, 198, .5), -8px -8px 16px rgba(255, 255, 255, .6) !important;
+}
+.card, .button:not(.is-primary):not(.is-link):not(.is-success):not(.is-danger):not(.is-warning):not(.is-info), .input, .textarea, .select select {
+  background: var(--bulma-body-background-color) !important;
+}
+.button:hover { box-shadow: 4px 4px 8px rgba(163, 177, 198, .5), -4px -4px 8px rgba(255, 255, 255, .6) !important; }
+.button:active {
+  box-shadow: inset 4px 4px 8px rgba(163, 177, 198, .5), inset -4px -4px 8px rgba(255, 255, 255, .6) !important;
+  transform: translateY(1px);
+}
+.button[disabled] { opacity: .5; box-shadow: none !important; }
+.button.is-primary { color: var(--bulma-primary) !important; background: var(--bulma-body-background-color) !important; }
+.button.is-primary:hover { color: var(--bulma-primary-invert) !important; background: var(--bulma-primary) !important; }
+
+.button.is-link { color: var(--bulma-link) !important; background: var(--bulma-body-background-color) !important; }
+.button.is-link:hover { color: var(--bulma-link-invert) !important; background: var(--bulma-link) !important; }
+.button.is-success { color: var(--bulma-success) !important; background: var(--bulma-body-background-color) !important; }
+.button.is-success:hover { color: var(--bulma-success-invert) !important; background: var(--bulma-success) !important; }
+.button.is-danger { color: var(--bulma-danger) !important; background: var(--bulma-body-background-color) !important; }
+.button.is-danger:hover { color: var(--bulma-danger-invert) !important; background: var(--bulma-danger) !important; }
+.button.is-warning { color: var(--bulma-warning) !important; background: var(--bulma-body-background-color) !important; }
+.button.is-warning:hover { color: var(--bulma-warning-invert) !important; background: var(--bulma-warning) !important; }
+.button.is-info { color: var(--bulma-info) !important; background: var(--bulma-body-background-color) !important; }
+.button.is-info:hover { color: var(--bulma-info-invert) !important; background: var(--bulma-info) !important; }
+
+.button.is-outlined.is-primary, .button.is-outlined.is-link { box-shadow: none !important; border: 1px solid var(--bulma-primary) !important; }
+
+.input, .textarea, .select select {
+  box-shadow: inset 4px 4px 8px rgba(163, 177, 198, .4), inset -4px -4px 8px rgba(255, 255, 255, .6) !important;
+}
+.input:focus, .textarea:focus, .select select:focus {
+  box-shadow: inset 5px 5px 10px rgba(163, 177, 198, .5), inset -5px -5px 10px rgba(255, 255, 255, .7) !important;
+}
+.checkbox input, .radio input, input[type=range] { accent-color: var(--bulma-primary); }
+input[type=range]::-webkit-slider-thumb {
+  background: var(--bulma-body-background-color);
+  box-shadow: 2px 2px 6px rgba(163, 177, 198, .6);
+}
+input[type=range]::-moz-range-thumb {
+  background: var(--bulma-body-background-color);
+  box-shadow: 2px 2px 6px rgba(163, 177, 198, .6);
+}
+
+.card-header { background: transparent !important; border: none; font-weight: 700; }
+
+.notification { box-shadow: 4px 4px 10px rgba(163, 177, 198, .4), -4px -4px 10px rgba(255, 255, 255, .6); border: none; }
+.tag { box-shadow: 2px 2px 4px rgba(163, 177, 198, .5); }
+
+.table { overflow: hidden; }
+.table thead th { font-weight: 700; border: none; }
+.table.is-striped tbody tr:nth-child(even) { background-color: rgba(163, 177, 198, .12); }
+
+.navbar { box-shadow: 0 4px 12px rgba(163, 177, 198, .4); background: var(--bulma-body-background-color) !important; }
+.navbar-item.navbar-brand, .navbar-brand .navbar-item { font-weight: 800; }
+
+.panel-block { border: none; background: transparent; }
+
+.breadcrumb li + li::before { color: var(--bulma-text-weak); }
+.breadcrumb li.is-active a { color: var(--bulma-body-color); font-weight: 700; }
+
+.pagination { gap: .4rem; }
+.pagination-link, .pagination-previous, .pagination-next {
+  border: none !important;
+  background: var(--bulma-body-background-color) !important;
+  box-shadow: 4px 4px 8px rgba(163, 177, 198, .5), -4px -4px 8px rgba(255, 255, 255, .6) !important;
+  font-weight: 600;
+  margin-left: 0 !important;
+}
+.pagination-link:hover { box-shadow: 2px 2px 4px rgba(163, 177, 198, .5), -2px -2px 4px rgba(255, 255, 255, .6) !important; color: var(--bulma-primary); }
+.pagination-link.is-current {
+  color: var(--bulma-primary-invert) !important;
+  background: var(--bulma-primary) !important;
+  box-shadow: inset 3px 3px 6px rgba(0, 0, 0, .25), inset -3px -3px 6px rgba(255, 255, 255, .15) !important;
+}
+.pagination-link[disabled] { box-shadow: none !important; opacity: .5; }
+
+blockquote {
+  padding: 1rem 1.25rem;
+  box-shadow: inset 4px 4px 8px rgba(163, 177, 198, .3), inset -4px -4px 8px rgba(255, 255, 255, .5);
+}
+
+[data-theme="dark"] {
+  .card, .button, .input, .textarea, .select select {
+    box-shadow: 8px 8px 16px rgba(0, 0, 0, .5), -8px -8px 16px rgba(255, 255, 255, .05) !important;
+  }
+  .button:hover { box-shadow: 4px 4px 8px rgba(0, 0, 0, .5), -4px -4px 8px rgba(255, 255, 255, .05) !important; }
+  .button:active {
+    box-shadow: inset 4px 4px 8px rgba(0, 0, 0, .5), inset -4px -4px 8px rgba(255, 255, 255, .05) !important;
+  }
+  .input, .textarea, .select select {
+    box-shadow: inset 4px 4px 8px rgba(0, 0, 0, .5), inset -4px -4px 8px rgba(255, 255, 255, .05) !important;
+  }
+  .navbar { box-shadow: 0 4px 12px rgba(0, 0, 0, .5); }
+  .table.is-striped tbody tr:nth-child(even) { background-color: rgba(255, 255, 255, .04); }
+  blockquote { box-shadow: inset 4px 4px 8px rgba(0, 0, 0, .4), inset -4px -4px 8px rgba(255, 255, 255, .04); }
+  .pagination-link, .pagination-previous, .pagination-next {
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, .5), -4px -4px 8px rgba(255, 255, 255, .05) !important;
+  }
+  .pagination-link:hover { box-shadow: 2px 2px 4px rgba(0, 0, 0, .5), -2px -2px 4px rgba(255, 255, 255, .05) !important; }
+  .pagination-link.is-current {
+    box-shadow: inset 3px 3px 6px rgba(0, 0, 0, .5), inset -3px -3px 6px rgba(255, 255, 255, .05) !important;
+  }
+}

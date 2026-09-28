@@ -1,0 +1,78 @@
+//! bulma-config: {"$weight-bold": "800", "$weight-semibold": "700", "$duration": "100ms", "$speed": "80ms", "$easing": "linear"}
+
+.button.is-primary { background-color: var(--bulma-primary) !important; border-color: var(--bulma-primary) !important; color: white !important; }
+.button.is-link { background-color: var(--bulma-link) !important; border-color: var(--bulma-link) !important; color: white !important; }
+.button.is-outlined.is-primary { border-color: var(--bulma-primary) !important; color: var(--bulma-primary) !important; }
+.button.is-outlined.is-link { border-color: var(--bulma-link) !important; color: var(--bulma-link) !important; }
+
+body { background: #000 !important; color: #fff !important; }
+h1, h2, h3, h4, h5, h6 { font-weight: 800; color: #fff; }
+
+a { color: #fff; text-decoration: underline; text-decoration-thickness: 2px; }
+a:hover { color: #000; background: #fff; }
+
+.button { font-weight: 700; border-width: 2px; }
+.button.is-primary { background: #fff !important; color: #000 !important; border: 2px solid #fff !important; }
+.button.is-primary:hover { background: #000 !important; color: #fff !important; }
+.button.is-link, .button.is-info { background: #000 !important; color: #fff !important; border: 2px solid #fff !important; }
+.button.is-link:hover, .button.is-info:hover { background: #fff !important; color: #000 !important; }
+.button.is-success { background: var(--bulma-success) !important; color: #000 !important; border: 2px solid var(--bulma-success) !important; }
+.button.is-danger { background: var(--bulma-danger) !important; color: #000 !important; border: 2px solid var(--bulma-danger) !important; }
+.button.is-warning { background: var(--bulma-warning) !important; color: #000 !important; border: 2px solid var(--bulma-warning) !important; }
+.button[disabled] { opacity: .4; }
+.button.is-outlined.is-primary, .button.is-outlined.is-link { border: 2px solid #fff; color: #fff; background: transparent; }
+
+.input, .textarea, .select select {
+  background: #000 !important;
+  color: #fff !important;
+  border: 2px solid #fff !important;
+}
+.input:focus, .textarea:focus, .select select:focus {
+  box-shadow: 0 0 0 .2rem #fff !important;
+  border-color: #fff !important;
+}
+.input::placeholder, .textarea::placeholder { color: #aaa; }
+.checkbox input, .radio input, input[type=range] { accent-color: #fff; }
+input[type=range]::-webkit-slider-thumb { background: #fff; }
+input[type=range]::-moz-range-thumb { background: #fff; }
+
+.card { background: #0a0a0a !important; border: 2px solid #fff !important; }
+.card-header { background: #000 !important; border-bottom: 2px solid #fff !important; color: #fff !important; font-weight: 800; }
+
+.notification { border: 2px solid #fff; background: #000; color: #fff; }
+.notification.is-danger { border-color: var(--bulma-danger); color: var(--bulma-danger); }
+.notification.is-success { border-color: var(--bulma-success); color: var(--bulma-success); }
+.notification.is-warning { border-color: var(--bulma-warning); color: var(--bulma-warning); }
+.tag { border: 2px solid #fff; }
+
+.table { color: #fff; border-color: #fff; }
+.table thead th { background: #fff; color: #000; border: none; font-weight: 800; }
+.table td, .table th { border-color: #fff; }
+.table.is-striped tbody tr:nth-child(even) { background-color: rgba(255, 255, 255, .08); color: #fff; }
+
+.navbar { background: #000 !important; border-bottom: 2px solid #fff; }
+.navbar-item.navbar-brand, .navbar-brand .navbar-item { color: #fff !important; font-weight: 800; }
+.navbar-item { color: #fff !important; font-weight: 700; }
+.navbar-item:hover { color: #000 !important; background: #fff; }
+
+.panel-block { background: #000 !important; color: #fff !important; border: 2px solid #fff !important; }
+
+.breadcrumb li + li::before { color: #fff; }
+.breadcrumb li.is-active a { color: #fff; font-weight: 700; }
+
+.pagination-link, .pagination-previous, .pagination-next {
+  background: #000 !important;
+  color: #fff !important;
+  border: 2px solid #fff !important;
+  font-weight: 700;
+}
+.pagination-link:hover { background: #fff !important; color: #000 !important; }
+.pagination-link.is-current { background: #fff !important; color: #000 !important; border: 2px solid #fff !important; }
+.pagination-link[disabled] { opacity: .4; }
+
+blockquote {
+  border-left: 4px solid #fff;
+  padding-left: 1rem;
+  color: #fff;
+  font-weight: 700;
+}

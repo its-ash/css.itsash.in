@@ -1,0 +1,103 @@
+//! bulma-config: {"$duration": "280ms", "$speed": "100ms", "$easing": "ease-in-out", "$weight-medium": "500"}
+
+.button.is-primary {
+  background-color: var(--bulma-primary) !important;
+  border-color: var(--bulma-primary) !important;
+  color: var(--bulma-body-background-color) !important;
+  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, .2), 0 4px 5px 0 rgba(0, 0, 0, .14) !important;
+}
+.button.is-link {
+  background-color: var(--bulma-link) !important;
+  border-color: var(--bulma-link) !important;
+  color: var(--bulma-body-background-color) !important;
+  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, .2), 0 4px 5px 0 rgba(0, 0, 0, .14) !important;
+}
+.button.is-success, .button.is-danger, .button.is-warning, .button.is-info {
+  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, .2), 0 4px 5px 0 rgba(0, 0, 0, .14);
+}
+.button:hover { box-shadow: 0 5px 8px -2px rgba(0, 0, 0, .25), 0 6px 10px 0 rgba(0, 0, 0, .2); }
+.button:active { box-shadow: 0 7px 10px -3px rgba(0, 0, 0, .3); transform: translateY(1px); }
+.button[disabled] { box-shadow: none; }
+.button.is-outlined.is-primary { border-color: var(--bulma-primary) !important; color: var(--bulma-primary) !important; box-shadow: none; }
+.button.is-outlined.is-link { border-color: var(--bulma-link) !important; color: var(--bulma-link) !important; box-shadow: none; }
+
+body { background: var(--bulma-body-background-color); }
+h1, h2, h3, h4, h5, h6 { font-weight: 500; letter-spacing: 0; }
+
+a { color: var(--bulma-primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.button {
+  text-transform: uppercase;
+  letter-spacing: .02em;
+  font-weight: 500;
+  transition: box-shadow .28s cubic-bezier(.4, 0, .2, 1), transform .1s ease;
+}
+
+.input, .textarea, .select select {
+  border: none;
+  border-bottom: 2px solid rgba(0, 0, 0, .3);
+  border-radius: .25rem .25rem 0 0;
+  background: rgba(0, 0, 0, .04);
+}
+.input:focus, .textarea:focus, .select select:focus {
+  border-bottom-color: var(--bulma-primary);
+  box-shadow: none;
+  background: rgba(0, 0, 0, .06);
+}
+.checkbox input, .radio input, input[type=range] { accent-color: var(--bulma-primary); }
+
+.card, .box { box-shadow: 0 2px 4px -1px rgba(0, 0, 0, .2), 0 4px 5px 0 rgba(0, 0, 0, .14); }
+.card-header { background: transparent; border-bottom: 1px solid rgba(0, 0, 0, .08); font-weight: 500; }
+
+.delete { transition: background-color .15s ease-in-out; }
+.image img { border-radius: .25rem; }
+
+.notification { box-shadow: 0 1px 3px rgba(0, 0, 0, .12); border: none; }
+.tag { font-weight: 500; }
+
+.table thead th { text-transform: uppercase; font-size: .75rem; letter-spacing: .03em; font-weight: 500; }
+.table.is-striped tbody tr:nth-child(even) { background-color: rgba(0, 0, 0, .03); }
+
+.navbar { box-shadow: 0 2px 4px -1px rgba(0, 0, 0, .2), 0 4px 5px 0 rgba(0, 0, 0, .14); }
+.navbar-item.navbar-brand, .navbar-brand .navbar-item { font-weight: 500; letter-spacing: .02em; }
+.navbar-item { text-transform: uppercase; font-size: .8rem; font-weight: 500; }
+
+.panel-block { border: none; border-bottom: 1px solid rgba(0, 0, 0, .08); }
+
+.breadcrumb li + li::before { color: rgba(0, 0, 0, .4); }
+.breadcrumb li.is-active a { color: rgba(0, 0, 0, .6); }
+.breadcrumb {
+  li { text-transform: uppercase; font-size: .8rem; letter-spacing: .02em; }
+}
+
+.pagination-link, .pagination-previous, .pagination-next {
+  border: none;
+  color: var(--bulma-primary);
+  font-weight: 500;
+  transition: box-shadow .28s cubic-bezier(.4, 0, .2, 1), background-color .28s cubic-bezier(.4, 0, .2, 1);
+}
+.pagination-link:hover { background-color: rgba(var(--bulma-primary-rgb), .08); box-shadow: none; }
+.pagination-link.is-current {
+  background: var(--bulma-primary);
+  border: none;
+  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, .2), 0 4px 5px 0 rgba(0, 0, 0, .14);
+}
+.pagination-link[disabled] { border: none; opacity: .45; }
+
+blockquote {
+  border-left: 4px solid var(--bulma-primary);
+  padding-left: 1rem;
+  color: rgba(0, 0, 0, .6);
+}
+
+[data-theme="dark"] {
+  .input, .textarea, .select select { background: rgba(255, 255, 255, .06); border-bottom-color: rgba(255, 255, 255, .3); }
+  .card-header { border-bottom-color: rgba(255, 255, 255, .08); }
+  .table.is-striped tbody tr:nth-child(even) { background-color: rgba(255, 255, 255, .04); }
+  .panel-block { border-bottom-color: rgba(255, 255, 255, .08); }
+  blockquote { color: rgba(255, 255, 255, .6); }
+  .breadcrumb li + li::before { color: rgba(255, 255, 255, .4); }
+  .breadcrumb li.is-active a { color: rgba(255, 255, 255, .6); }
+  .pagination-link:hover { background-color: rgba(255, 255, 255, .08); }
+}
