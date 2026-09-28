@@ -1,0 +1,196 @@
+//! bulma-config: {"$duration": "150ms", "$speed": "150ms", "$easing": "ease-in-out"}
+
+.button.is-primary {
+  background-color: var(--bulma-primary) !important;
+  border-color: var(--bulma-primary) !important;
+  color: #fff !important;
+}
+
+.button.is-link {
+  background-color: var(--bulma-link) !important;
+  border-color: var(--bulma-link) !important;
+  color: #fff !important;
+}
+
+.button.is-outlined.is-primary {
+  border-color: var(--bulma-primary) !important;
+  color: var(--bulma-primary) !important;
+}
+
+.button.is-outlined.is-link {
+  border-color: var(--bulma-link) !important;
+  color: var(--bulma-link) !important;
+}
+
+body {
+  background: var(--bulma-body-background-color);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+}
+
+a {
+  color: var(--bulma-primary);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--bulma-link);
+  text-decoration: underline;
+}
+
+.button {
+  font-weight: 500;
+}
+
+.button.is-primary:hover,
+.button.is-link:hover,
+.button.is-success:hover,
+.button.is-danger:hover,
+.button.is-warning:hover,
+.button.is-info:hover {
+  filter: brightness(.95);
+}
+
+.button:active {
+  transform: translateY(1px);
+}
+
+.button[disabled] {
+  opacity: .55;
+}
+
+.input:focus, .textarea:focus, .select select:focus {
+  border-color: var(--bulma-primary);
+}
+
+.checkbox input, .radio input, input[type=range] {
+  accent-color: var(--bulma-primary);
+}
+
+.card, .box {
+  border: 1px solid rgba(0, 0, 0, .08);
+}
+
+.content h1, .content h2, .content h3, .content h4 {
+  font-weight: 600;
+}
+
+.delete {
+  transition: background-color .15s ease-in-out;
+}
+
+.image img {
+  border-radius: .375rem;
+}
+
+.card-header {
+  background: rgba(0, 0, 0, .03);
+  font-weight: 600;
+}
+
+.notification {
+  border-width: 1px;
+}
+
+.tag {
+  font-weight: 600;
+}
+
+.table thead th {
+  font-weight: 600;
+  border-bottom-width: 2px;
+}
+
+.table.is-striped tbody tr:nth-child(even) {
+  background-color: rgba(0, 0, 0, .02);
+}
+
+.navbar {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .08);
+}
+
+.navbar-item.navbar-brand,
+.navbar-brand .navbar-item {
+  font-weight: 700;
+}
+
+.navbar-item {
+  font-weight: 500;
+}
+
+.panel-block {
+  border-color: rgba(0, 0, 0, .08);
+}
+
+.breadcrumb li + li::before {
+  color: rgba(0, 0, 0, .35);
+}
+
+.breadcrumb li.is-active a {
+  color: var(--bulma-text-weak);
+}
+
+.pagination-link, .pagination-previous, .pagination-next {
+  border-color: rgba(0, 0, 0, .08);
+  font-weight: 500;
+}
+
+.pagination-link:hover {
+  background-color: rgba(0, 0, 0, .04);
+  border-color: rgba(0, 0, 0, .08);
+  color: var(--bulma-primary);
+}
+
+.pagination-link.is-current {
+  background: var(--bulma-primary);
+  border-color: var(--bulma-primary);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .12);
+}
+
+.pagination-link[disabled] {
+  opacity: .55;
+}
+
+blockquote {
+  border-left: 3px solid var(--bulma-primary);
+  padding-left: 1rem;
+  color: var(--bulma-text-weak);
+  font-style: italic;
+}
+
+[data-theme="dark"] {
+  .card, .box {
+    border-color: rgba(255, 255, 255, .08);
+  }
+
+  .card-header {
+    background: rgba(255, 255, 255, .04);
+  }
+
+  .navbar {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .4);
+  }
+
+  .table.is-striped tbody tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, .03);
+  }
+
+  .panel-block {
+    border-color: rgba(255, 255, 255, .08);
+  }
+
+  .breadcrumb li + li::before {
+    color: rgba(255, 255, 255, .35);
+  }
+
+  .pagination-link, .pagination-previous, .pagination-next {
+    border-color: rgba(255, 255, 255, .08);
+  }
+
+  .pagination-link:hover {
+    background-color: rgba(255, 255, 255, .06);
+    border-color: rgba(255, 255, 255, .08);
+  }
+}

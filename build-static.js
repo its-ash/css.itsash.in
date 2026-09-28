@@ -21,6 +21,7 @@ const presetsJs = fs.readFileSync(path.join(__dirname, 'presets.js'), 'utf-8');
 const sassDartJs = fs.readFileSync(path.join(__dirname, 'sass.dart.js'), 'utf-8');
 const immutableJs = fs.readFileSync(path.join(__dirname, 'immutable.min.js'), 'utf-8');
 const sassBrowserInit = fs.readFileSync(path.join(__dirname, 'sass-browser-init.js'), 'utf-8');
+const scssManifestJs = fs.readFileSync(path.join(__dirname, 'scss-manifest.js'), 'utf-8');
 
 const html = htmlTemplate
   .replace('</head>', `
@@ -36,6 +37,7 @@ fs.writeFileSync(path.join(distDir, 'presets.js'), presetsJs);
 fs.writeFileSync(path.join(distDir, 'sass.dart.js'), sassDartJs);
 fs.writeFileSync(path.join(distDir, 'immutable.min.js'), immutableJs);
 fs.writeFileSync(path.join(distDir, 'sass-browser-init.js'), sassBrowserInit);
+fs.writeFileSync(path.join(distDir, 'scss-manifest.js'), scssManifestJs);
 
 function copyDirRecursive(src, dst) {
   fs.mkdirSync(dst, { recursive: true });
