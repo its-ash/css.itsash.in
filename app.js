@@ -251,7 +251,7 @@ async function compileSass(themeKey, palette, headingFont, bodyFont) {
 
   const configBody = [...configMap.entries()].map(([name, value]) => `  ${name}: ${value}`).join(',\n');
 
-  const bulmaUse = `@use "bulma/bulma-entry" with (\n${configBody}\n);`;
+  const bulmaUse = `@use "bulma/index" with (\n${configBody}\n);`;
 
   const entry = `
     ${bulmaUse}
@@ -265,15 +265,16 @@ async function compileSass(themeKey, palette, headingFont, bodyFont) {
     const baseNoExt = base.replace(/\.scss$/, '');
     const dirPrefix = dir ? `${dir}/` : '';
 
-    // If the last segment matches an existing folder name, try that folder's
-    // index files first so `@use "bulma/base"` resolves to base/_index.scss
-    // instead of 404ing on base.scss.
+    // Resolve in canonical Sass order: literal file first, then underscore
+    // variant, then directory index barrels. Trying directory indexes first
+    // made plain-file imports like `@use "initial-variables"` 404 against
+    // sibling directories that don't exist (e.g. utilities/initial-variables/).
     if (dirPrefix) {
       return [
+        `${dirPrefix}${baseNoExt}.scss`,
+        `${dirPrefix}_${baseNoExt}.scss`,
         `${dirPrefix}${baseNoExt}/_index.scss`,
         `${dirPrefix}${baseNoExt}/index.scss`,
-        `${dirPrefix}_${baseNoExt}.scss`,
-        `${dirPrefix}${baseNoExt}.scss`,
       ];
     }
     return [
@@ -286,6 +287,7 @@ async function compileSass(themeKey, palette, headingFont, bodyFont) {
 
   const customImporter = {
     async canonicalize(url, ctx) {
+      if (url.startsWith('sass:')) return null; // let Sass handle builtin namespaces
       if (url.startsWith('~')) url = url.slice(1);
       const base = ctx?.containingUrl ? ctx.containingUrl.href : 'file:///scss/entry.scss';
       const resolved = new URL(url, base);
