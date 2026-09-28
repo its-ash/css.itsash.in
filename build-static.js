@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const presetDir = path.join(__dirname, 'scss', 'presets');
-const distDir = path.join(__dirname, 'dist');
+const distDir = path.join(__dirname, 'docs');
 
 if (!fs.existsSync(distDir)) fs.mkdirSync(distDir, { recursive: true });
 
@@ -54,5 +54,5 @@ function copyDirRecursive(src, dst) {
 
 copyDirRecursive(path.join(__dirname, 'scss'), path.join(distDir, 'scss'));
 
-console.log('✓ Static build complete in ./dist');
+console.log('✓ Static build complete in ./docs');
 console.log('Ready for GitHub Pages deployment');

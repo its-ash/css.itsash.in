@@ -15,7 +15,7 @@ Build for static hosting:
 npm run build
 ```
 
-This creates a `dist/` directory with all files needed for GitHub Pages.
+This creates a `docs/` directory with all files needed for GitHub Pages.
 
 ### GitHub Pages Setup
 
@@ -23,7 +23,7 @@ This creates a `dist/` directory with all files needed for GitHub Pages.
 2. In repository settings → Pages:
    - Source: `Deploy from a branch`
    - Branch: `main` (or your branch)
-   - Folder: `/dist`
+   - Folder: `/docs`
 
 The app is now fully browser-based:
 - **No server needed** — SCSS compilation happens in the browser via Sass WASM
